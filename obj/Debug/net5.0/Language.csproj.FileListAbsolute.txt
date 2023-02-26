@@ -1,0 +1,16 @@
+C:\Users\varun\OneDrive\Desktop\Language\Language\Language\bin\Debug\net5.0\Language.exe
+C:\Users\varun\OneDrive\Desktop\Language\Language\Language\bin\Debug\net5.0\Language.deps.json
+C:\Users\varun\OneDrive\Desktop\Language\Language\Language\bin\Debug\net5.0\Language.runtimeconfig.json
+C:\Users\varun\OneDrive\Desktop\Language\Language\Language\bin\Debug\net5.0\Language.runtimeconfig.dev.json
+C:\Users\varun\OneDrive\Desktop\Language\Language\Language\bin\Debug\net5.0\Language.dll
+C:\Users\varun\OneDrive\Desktop\Language\Language\Language\bin\Debug\net5.0\ref\Language.dll
+C:\Users\varun\OneDrive\Desktop\Language\Language\Language\bin\Debug\net5.0\Language.pdb
+C:\Users\varun\OneDrive\Desktop\Language\Language\Language\obj\Debug\net5.0\Language.csprojAssemblyReference.cache
+C:\Users\varun\OneDrive\Desktop\Language\Language\Language\obj\Debug\net5.0\Language.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\varun\OneDrive\Desktop\Language\Language\Language\obj\Debug\net5.0\Language.AssemblyInfoInputs.cache
+C:\Users\varun\OneDrive\Desktop\Language\Language\Language\obj\Debug\net5.0\Language.AssemblyInfo.cs
+C:\Users\varun\OneDrive\Desktop\Language\Language\Language\obj\Debug\net5.0\Language.csproj.CoreCompileInputs.cache
+C:\Users\varun\OneDrive\Desktop\Language\Language\Language\obj\Debug\net5.0\Language.dll
+C:\Users\varun\OneDrive\Desktop\Language\Language\Language\obj\Debug\net5.0\ref\Language.dll
+C:\Users\varun\OneDrive\Desktop\Language\Language\Language\obj\Debug\net5.0\Language.pdb
+C:\Users\varun\OneDrive\Desktop\Language\Language\Language\obj\Debug\net5.0\Language.genruntimeconfig.cache
