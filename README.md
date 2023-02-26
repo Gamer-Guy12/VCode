@@ -1,2 +1,2 @@
 # VCode
-This is VCode right bad code that you shouldn't write
+This is VCode bad code that you shouldn't write
