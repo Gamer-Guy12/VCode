@@ -121,6 +121,12 @@ namespace Language
                 Code(write, true);
 
             }
+            else if (split[0] == "write")
+            {
+
+
+
+            }
             else
             {
 
