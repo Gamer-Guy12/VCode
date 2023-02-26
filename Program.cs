@@ -20,7 +20,7 @@ namespace Language
             if (arg != null)
             {
 
-                write = File.ReadAllLines("@" + '"' + arg + '"');
+                write = File.ReadAllLines(arg);
 
                 foreach (string code in write)
                 {
@@ -64,31 +64,56 @@ namespace Language
 
                 }
                 Console.WriteLine(writable);
-                Start(null);
+                if (repeat)
+                {
+
+                    string write = Console.ReadLine();
+                    Code(write, true);
+
+                }
 
             }
             else if (split[0] == "read")
             {
 
                 Console.ReadLine();
-                Start(null);
+                if (repeat)
+                {
+
+                    string write = Console.ReadLine();
+                    Code(write, true);
+
+                }
+
+            }
+            else if (repeat && split[0] == "exit")
+            {
+
+                Exit();
 
             }
             else
             {
 
                 Console.WriteLine("No known code");
-                Start(null);
+                if (repeat)
+                {
+
+                    string write = Console.ReadLine();
+                    Code(write, true);
+
+                }
 
             }
 
-            if (repeat)
-            {
+            
 
-                string write = Console.ReadLine();
-                Code(write, true);
+        }
 
-            }
+        void Exit()
+        {
+
+            Console.ReadKey();
 
         }
 
