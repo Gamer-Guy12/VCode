@@ -92,6 +92,35 @@ namespace Language
                 Exit();
 
             }
+            else if (split [0] == "look")
+            {
+
+                string drive = split[1];
+                string path = @"C:\";
+                path = path.Replace("C", drive);
+                for (int i = 2; i < split.Length; i++)
+                {
+
+                    if (path == null) path = split[i] + " ";
+                    else path = path + split[i] + " ";
+
+                }
+
+
+                string[] look = null;
+
+                look = File.ReadAllLines(path);
+
+                foreach (string text in look)
+                {
+
+                    Console.WriteLine(text);
+
+                }
+                string write = Console.ReadLine();
+                Code(write, true);
+
+            }
             else
             {
 
