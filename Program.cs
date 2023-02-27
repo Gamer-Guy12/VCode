@@ -8,6 +8,7 @@ namespace Language
     {
 
         public Dictionary<string, string[]> funcs = new Dictionary<string, string[]>();
+        public Dictionary<string, string> strings = new Dictionary<string, string>();
 
         static void Main(string[] args)
         {
@@ -57,21 +58,33 @@ namespace Language
 
                 string writable = null;
 
-                for (int i = 1; i < split.Length; i++)
+                if (split[1] == "$")
                 {
 
-                    if (split[i] != null)
-                    {
-
-                        if (writable != null)
-                            writable = writable + " " + split[i];
-                        else
-                            writable = split[i];
-
-                    }
+                    Console.WriteLine(strings[split[2]]);
 
                 }
-                Console.WriteLine(writable);
+                else
+                {
+
+                    for (int i = 1; i < split.Length; i++)
+                    {
+
+                        if (split[i] != null)
+                        {
+
+                            if (writable != null)
+                                writable = writable + " " + split[i];
+                            else
+                                writable = split[i];
+
+                        }
+
+                    }
+                    Console.WriteLine(writable);
+
+                }
+                
                 if (repeat)
                 {
 
@@ -84,7 +97,18 @@ namespace Language
             else if (split[0] == "read")
             {
 
-                Console.ReadLine();
+                if (split[1] == "$")
+                {
+
+                    strings[split[2]] = Console.ReadLine();
+
+                }
+                else
+                {
+
+                    Console.ReadLine();
+
+                }
                 if (repeat)
                 {
 
@@ -106,14 +130,17 @@ namespace Language
                 string drive = split[1];
                 string path = @"C:\";
                 path = path.Replace("C", drive);
-                for (int i = 2; i < split.Length; i++)
+                if (split[2] == "$") path = path + strings[split[3]] + " ";
+                else
                 {
+                    for (int i = 2; i < split.Length; i++)
+                    {
 
-                    if (path == null) path = split[i] + " ";
-                    else path = path + split[i] + " ";
+                        if (path == null) path = split[i] + " ";
+                        else path = path + split[i] + " ";
 
+                    }
                 }
-
 
                 string[] look = null;
 
@@ -141,19 +168,23 @@ namespace Language
                 string drive = split[1];
                 string path = @"C:\";
                 path = path.Replace("C", drive);
-                for (int i = 2; i < split.Length; i++)
+                if (split[2] == "$") path = path + strings[split[3]] + " ";
+                else
                 {
+                    for (int i = 2; i < split.Length; i++)
+                    {
 
-                    if (path == null) path = split[i] + " ";
-                    else path = path + split[i] + " ";
+                        if (path == null) path = split[i] + " ";
+                        else path = path + split[i] + " ";
 
+                    }
                 }
 
                 while (true)
                 {
 
                     string write = Console.ReadLine();
-                    if (write != null)
+                    if (write != null && write != "`")
                     {
 
                         File.AppendAllText(path, "\n" + write);
@@ -161,7 +192,7 @@ namespace Language
                     }
 
 
-                    if (write == "") break;
+                    if (write == "`") break;
 
                 }
 
@@ -177,13 +208,13 @@ namespace Language
             else if (split[0] == "func")
             {
 
-                string[] toWrite = new string[1000000];
+                string[] toWrite = new string[1000];
                 int id = 0;
                 while (true)
                 {
 
                     string writeable = Console.ReadLine();
-                    if (writeable == "") break;
+                    if (writeable == "`") break;
                     else
                     {
 
@@ -227,7 +258,47 @@ namespace Language
                 foreach (string writable in toWrite)
                 {
 
+                    if (writable == "`") break;
                     Code(writable, false);
+
+                }
+
+                if (repeat)
+                {
+
+                    string write = Console.ReadLine();
+                    Code(write, true);
+
+                }
+
+            }
+            else if (split[0] == "$")
+            {
+
+                string toWrite = null;
+
+                for (int i = 2; i < split.Length; i++)
+                {
+
+                    if (split[i] != null)
+                    {
+
+                        if (toWrite != null)
+                            toWrite = toWrite + " " + split[i];
+                        else
+                            toWrite = split[i];
+
+                    }
+
+                }
+
+                strings.Add(split[1], toWrite);
+
+                if (repeat)
+                {
+
+                    string write = Console.ReadLine();
+                    Code(write, true);
 
                 }
 
@@ -246,14 +317,27 @@ namespace Language
 
             }
 
-            
-
         }
 
         void Exit()
         {
 
-            Console.ReadKey();
+            ConsoleKeyInfo state = Console.ReadKey();
+            char finalState = state.KeyChar;
+
+            if (finalState != 'n')
+            {
+
+                return;
+
+            }
+            else
+            {
+
+                string write = Console.ReadLine();
+                Code(write, true);
+
+            }
 
         }
 
