@@ -1,10 +1,14 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 
 namespace Language
 {
     class Program
     {
+
+        public Dictionary<string, string[]> funcs = new Dictionary<string, string[]>();
+
         static void Main(string[] args)
         {
 
@@ -43,7 +47,11 @@ namespace Language
         void Code(string code, bool repeat)
         {
 
-            string[] split = code.Split(' ');
+            string[] split = new string[1212345];
+
+            if (code == null) return;
+
+            split = code.Split(' ');
             if (split[0] == "print")
             {
 
@@ -117,14 +125,111 @@ namespace Language
                     Console.WriteLine(text);
 
                 }
-                string write = Console.ReadLine();
-                Code(write, true);
+                
+                if (repeat)
+                {
+
+                    string write = Console.ReadLine();
+                    Code(write, true);
+
+                }
 
             }
             else if (split[0] == "write")
             {
 
+                string drive = split[1];
+                string path = @"C:\";
+                path = path.Replace("C", drive);
+                for (int i = 2; i < split.Length; i++)
+                {
 
+                    if (path == null) path = split[i] + " ";
+                    else path = path + split[i] + " ";
+
+                }
+
+                while (true)
+                {
+
+                    string write = Console.ReadLine();
+                    if (write != null)
+                    {
+
+                        File.AppendAllText(path, "\n" + write);
+
+                    }
+
+
+                    if (write == "") break;
+
+                }
+
+                if (repeat)
+                {
+
+                    string write = Console.ReadLine();
+                    Code(write, true);
+
+                }
+
+            }
+            else if (split[0] == "func")
+            {
+
+                string[] toWrite = new string[1000000];
+                int id = 0;
+                while (true)
+                {
+
+                    string writeable = Console.ReadLine();
+                    if (writeable == "") break;
+                    else
+                    {
+
+                        toWrite[id] = writeable;
+                        id = id + 1;
+
+                    }
+
+                }
+
+                funcs.Add(split[1], toWrite);
+
+                if (repeat)
+                {
+
+                    string write = Console.ReadLine();
+                    Code(write, true);
+
+                }
+
+            }
+            else if (split[0] == "run")
+            {
+
+                if (!funcs.ContainsKey(split[1]))
+                {
+
+                    Console.WriteLine("No known function");
+                    if (repeat)
+                    {
+
+                        string write = Console.ReadLine();
+                        Code(write, true);
+
+                    }
+
+                }
+
+                string[] toWrite = funcs[split[1]];
+
+                foreach (string writable in toWrite)
+                {
+
+                    Code(writable, false);
+
+                }
 
             }
             else
