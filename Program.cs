@@ -9,6 +9,7 @@ namespace Language
 
         public Dictionary<string, string[]> funcs = new Dictionary<string, string[]>();
         public Dictionary<string, string> strings = new Dictionary<string, string>();
+        public Dictionary<string, int> ints = new Dictionary<string, int>();
 
         static void Main(string[] args)
         {
@@ -293,6 +294,23 @@ namespace Language
                 }
 
                 strings.Add(split[1], toWrite);
+
+                if (repeat)
+                {
+
+                    string write = Console.ReadLine();
+                    Code(write, true);
+
+                }
+
+            }
+            else if (split[0] == "#") 
+            {
+
+                string num = split[2];
+                int index = int.Parse(num);
+                
+                ints.add(split[1], index);
 
                 if (repeat)
                 {
