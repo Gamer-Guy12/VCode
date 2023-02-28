@@ -334,6 +334,49 @@ namespace Language
                 }
 
             }
+            else if (split[0] == "")
+            {
+
+                if (repeat)
+                {
+
+                    string write = Console.ReadLine();
+                    Code(write, true);
+
+                }
+
+            }
+            else if (split[0] == "import")
+            {
+
+                string drive = split[2];
+                string path = @"C:\";
+                path = path.Replace("C", drive);
+                if (split[3] == "$") path = path + strings[split[4]] + " ";
+                else
+                {
+                    for (int i = 3; i < split.Length; i++)
+                    {
+
+                        if (path == null) path = split[i] + " ";
+                        else path = path + split[i] + " ";
+
+                    }
+                }
+
+                string[] import = File.ReadAllLines(path);
+
+                funcs.Add(split[1], import);
+
+                if (repeat)
+                {
+
+                    string write = Console.ReadLine();
+                    Code(write, true);
+
+                }
+
+            }
             else
             {
 
