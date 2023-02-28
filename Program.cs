@@ -9,7 +9,7 @@ namespace Language
 
         public Dictionary<string, string[]> funcs = new Dictionary<string, string[]>();
         public Dictionary<string, string> strings = new Dictionary<string, string>();
-        public Dictionary<string, int> ints = new Dictionary<string, int>();
+        public Dictionary<string, float> floats = new Dictionary<string, float>();
 
         static void Main(string[] args)
         {
@@ -63,6 +63,12 @@ namespace Language
                 {
 
                     Console.WriteLine(strings[split[2]]);
+
+                }
+                else if (split[1] == "#")
+                {
+
+                    Console.WriteLine(floats[split[2]].ToString());
 
                 }
                 else
@@ -308,9 +314,9 @@ namespace Language
             {
 
                 string num = split[2];
-                int index = int.Parse(num);
+                float index = float.Parse(num);
                 
-                ints.add(split[1], index);
+                floats.Add(split[1], index);
 
                 if (repeat)
                 {
