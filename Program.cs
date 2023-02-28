@@ -110,6 +110,13 @@ namespace Language
                     strings[split[2]] = Console.ReadLine();
 
                 }
+                else if (split[1] == "#")
+                {
+
+                    string num = Console.ReadLine();
+                    floats[split[2]] = float.Parse(num);
+
+                }
                 else
                 {
 
