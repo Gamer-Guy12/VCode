@@ -1,0 +1,7 @@
+func hello
+print hi
+`
+
+func def
+print def
+`

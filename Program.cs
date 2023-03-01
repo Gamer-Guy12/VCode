@@ -291,6 +291,36 @@ namespace Language
 
                 string toWrite = null;
 
+                if (strings.ContainsKey(split[1]))
+                {
+
+                    for (int i = 2; i < split.Length; i++)
+                    {
+
+                        if (split[i] != null)
+                        {
+
+                            if (toWrite != null)
+                                toWrite = toWrite + " " + split[i];
+                            else
+                                toWrite = split[i];
+
+                        }
+
+                    }
+
+                    strings[split[1]] = toWrite;
+                    if (repeat)
+                    {
+
+                        string write = Console.ReadLine();
+                        Code(write, true);
+
+                    }
+                    return;
+
+                }
+
                 for (int i = 2; i < split.Length; i++)
                 {
 
@@ -322,7 +352,22 @@ namespace Language
 
                 string num = split[2];
                 float index = float.Parse(num);
-                
+
+                if (floats.ContainsKey(split[1]))
+                {
+
+                    floats[split[1]] = index;
+                    if (repeat)
+                    {
+
+                        string write = Console.ReadLine();
+                        Code(write, true);
+
+                    }
+                    return;
+
+                }
+
                 floats.Add(split[1], index);
 
                 if (repeat)
@@ -353,6 +398,19 @@ namespace Language
                 string path = @"C:\";
                 path = path.Replace("C", drive);
                 if (split[3] == "$") path = path + strings[split[4]] + " ";
+                else if (split[3] == "*")
+                {
+
+                    path = null;
+                    for (int i = 3; i < split.Length; i++)
+                    {
+
+                        if (path == null) path = split[i] + " ";
+                        else path = path + split[i] + " ";
+
+                    }
+
+                }
                 else
                 {
                     for (int i = 3; i < split.Length; i++)
@@ -366,7 +424,95 @@ namespace Language
 
                 string[] import = File.ReadAllLines(path);
 
-                funcs.Add(split[1], import);
+                bool inFunc = false;
+                string[] func = new string[100];
+                string[] defFunc = new string[200];
+                int defId = 0;
+                string funcName = "";
+                int id = 0;
+
+                foreach (string funcText in import)
+                {
+
+                    string[] text = funcText.Split(" ");
+                    if (text[0] == "func")
+                    {
+
+                        inFunc = true;
+                        funcName = text[1];
+                        id = 0;
+
+                    }
+                    else if (text[0] == "`")
+                    {
+
+                        inFunc = false;
+                        funcs.Add(funcName, func);
+                        func = new string[100];
+                        id = 0;
+
+                    }
+                    else if (text[0] == "import")
+                    {
+
+                        Code(funcText, false);
+
+                    }
+                    else if (inFunc)
+                    {
+
+                        func[id] = funcText;
+                        id = id + 1;
+
+                    }
+                    else
+                    {
+
+                        defFunc[defId] = funcText;
+                        defId++;
+
+                    }
+
+                }
+
+                if (defFunc[0] != "")
+                {
+
+                    funcs.Add(split[1], defFunc);
+
+                }
+
+                if (repeat)
+                {
+
+                    string write = Console.ReadLine();
+                    Code(write, true);
+
+                }
+
+            }
+            else if (split[0] == "funcs")
+            {
+
+                List<string> func = new List<string>(funcs.Keys);
+                foreach (string key in func)
+                {
+
+                    Console.WriteLine(key);
+
+                }
+
+                if (repeat)
+                {
+
+                    string write = Console.ReadLine();
+                    Code(write, true);
+
+                }
+
+            }
+            else if (split[0] == "null")
+            {
 
                 if (repeat)
                 {
