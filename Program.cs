@@ -523,6 +523,53 @@ namespace Language
                 }
 
             }
+            else if (split[0] == "add$")
+            {
+
+                string add = "";
+
+                for (int i = 2; i < split.Length; i++)
+                {
+
+                    if (split[i] != null)
+                    {
+
+                        if (add != null)
+                            add = add + " " + split[i];
+                        else
+                            add = split[i];
+
+                    }
+
+                }
+
+                string output = strings[split[1]] + add;
+
+                strings[split[1]] = output;
+
+            }
+            else if (split[0] == "push$")
+            {
+
+                strings[split[1]] = strings[split[3]];
+
+            }
+            else if (split[0] == "add#")
+            {
+
+                float add = floats[split[2]];
+
+                float output = floats[split[1]] + add;
+
+                floats[split[1]] = output;
+
+            }
+            else if (split[0] == "push#")
+            {
+
+                floats[split[1]] = floats[split[3]];
+
+            }
             else
             {
 
