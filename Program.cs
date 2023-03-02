@@ -570,6 +570,12 @@ namespace Language
                 floats[split[1]] = floats[split[3]];
 
             }
+            else if (split[0] == "mult")
+            {
+
+                floats[split[1]] *= floats[split[2]];
+
+            }
             else
             {
 
