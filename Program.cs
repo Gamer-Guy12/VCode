@@ -10,6 +10,7 @@ namespace Language
         public Dictionary<string, string[]> funcs = new Dictionary<string, string[]>();
         public Dictionary<string, string> strings = new Dictionary<string, string>();
         public Dictionary<string, float> floats = new Dictionary<string, float>();
+        public Dictionary<string, Keyword> keywords = new Dictionary<string, Keyword>();
 
         static void Main(string[] args)
         {
@@ -91,7 +92,7 @@ namespace Language
                     Console.WriteLine(writable);
 
                 }
-                
+
                 if (repeat)
                 {
 
@@ -138,7 +139,7 @@ namespace Language
                 Exit();
 
             }
-            else if (split [0] == "look")
+            else if (split[0] == "look")
             {
 
                 string drive = split[1];
@@ -166,7 +167,7 @@ namespace Language
                     Console.WriteLine(text);
 
                 }
-                
+
                 if (repeat)
                 {
 
@@ -347,7 +348,7 @@ namespace Language
                 }
 
             }
-            else if (split[0] == "#") 
+            else if (split[0] == "#")
             {
 
                 string num = split[2];
@@ -574,6 +575,300 @@ namespace Language
             {
 
                 floats[split[1]] *= floats[split[2]];
+
+            }
+            else if (split[0] == "key")
+            {
+
+                string drive = split[2];
+                string path = @"C:\";
+                path = path.Replace("C", drive);
+                if (split[3] == "$") path = path + strings[split[4]] + " ";
+                else if (split[3] == "*")
+                {
+
+                    path = null;
+                    for (int i = 3; i < split.Length; i++)
+                    {
+
+                        if (path == null) path = split[i] + " ";
+                        else path = path + split[i] + " ";
+
+                    }
+
+                }
+                else
+                {
+                    for (int i = 3; i < split.Length; i++)
+                    {
+
+                        if (path == null) path = split[i] + " ";
+                        else path = path + split[i] + " ";
+
+                    }
+                }
+
+                string[] lines = File.ReadAllLines(path);
+                Keyword key = new Keyword();
+
+                bool inFunc = false;
+                string funcName = "";
+                string[] funcText = new string[100];
+                int id = 0;
+
+                foreach (string line in lines)
+                {
+
+                    string[] text = line.Split(" ");
+                    
+                    if (text[0] == "func")
+                    {
+
+                        inFunc = true;
+                        funcName = text[1];
+                        id = 0;
+
+                    }
+                    else if (inFunc && text[0] == "`")
+                    {
+
+                        inFunc = false;
+                        key.funcs.Add(funcName, funcText);
+                        funcName = "";
+                        id = 0;
+
+                    }
+                    else if (inFunc)
+                    {
+
+                        funcText[id] = line;
+                        id++;
+
+                    }
+                    else if (text[0] == "$")
+                    {
+
+                        string toWrite = null;
+
+                        if (key.strings.ContainsKey(split[1]))
+                        {
+
+                            for (int i = 2; i < split.Length; i++)
+                            {
+
+                                if (split[i] != null)
+                                {
+
+                                    if (toWrite != null)
+                                        toWrite = toWrite + " " + split[i];
+                                    else
+                                        toWrite = split[i];
+
+                                }
+
+                            }
+
+                            key.strings[split[1]] = toWrite;
+
+                        }
+                        else
+                        {
+
+                            for (int i = 2; i < split.Length; i++)
+                            {
+
+                                if (split[i] != null)
+                                {
+
+                                    if (toWrite != null)
+                                        toWrite = toWrite + " " + split[i];
+                                    else
+                                        toWrite = split[i];
+
+                                }
+
+                            }
+
+                            key.strings.Add(split[1], toWrite);
+
+                        }
+
+                    }
+                    else if (text[0] == "#")
+                    {
+
+                        string num = split[2];
+                        float index = float.Parse(num);
+
+                        if (key.floats.ContainsKey(split[1]))
+                        {
+
+                            key.floats[split[1]] = index;
+
+                        }
+                        else
+                        {
+
+                            key.floats.Add(split[1], index);
+
+                        }
+
+                    }
+                    else if (text[0] == "key")
+                    {
+
+                        string newdrive = split[2];
+                        string newpath = @"C:\";
+                        newpath = newpath.Replace("C", newdrive);
+                        if (split[3] == "$") newpath = newpath + strings[split[4]] + " ";
+                        else if (split[3] == "*")
+                        {
+
+                            newpath = null;
+                            for (int i = 3; i < split.Length; i++)
+                            {
+
+                                if (newpath == null) newpath = split[i] + " ";
+                                else newpath = newpath + split[i] + " ";
+
+                            }
+
+                        }
+                        else
+                        {
+                            for (int i = 3; i < split.Length; i++)
+                            {
+
+                                if (newpath == null) newpath = split[i] + " ";
+                                else newpath = newpath + split[i] + " ";
+
+                            }
+                        }
+
+                        string[] newlines = File.ReadAllLines(newpath);
+                        Keyword newkey = new Keyword();
+
+                        bool newinFunc = false;
+                        string newfuncName = "";
+                        string[] newfuncText = new string[100];
+                        int newid = 0;
+
+                        foreach (string newline in newlines)
+                        {
+
+                            string[] newtext = newline.Split(" ");
+
+                            if (newtext[0] == "func")
+                            {
+
+                                newinFunc = true;
+                                newfuncName = newtext[1];
+                                newid = 0;
+
+                            }
+                            else if (newinFunc && newtext[0] == "`")
+                            {
+
+                                newinFunc = false;
+                                newkey.funcs.Add(newfuncName, newfuncText);
+                                newfuncName = "";
+                                newid = 0;
+
+                            }
+                            else if (newinFunc)
+                            {
+
+                                newfuncText[newid] = newline;
+                                newid++;
+
+                            }
+                            else if (newtext[0] == "$")
+                            {
+
+                                string toWrite = null;
+
+                                if (newkey.strings.ContainsKey(split[1]))
+                                {
+
+                                    for (int i = 2; i < split.Length; i++)
+                                    {
+
+                                        if (split[i] != null)
+                                        {
+
+                                            if (toWrite != null)
+                                                toWrite = toWrite + " " + split[i];
+                                            else
+                                                toWrite = split[i];
+
+                                        }
+
+                                    }
+
+                                    newkey.strings[split[1]] = toWrite;
+
+                                }
+                                else
+                                {
+
+                                    for (int i = 2; i < split.Length; i++)
+                                    {
+
+                                        if (split[i] != null)
+                                        {
+
+                                            if (toWrite != null)
+                                                toWrite = toWrite + " " + split[i];
+                                            else
+                                                toWrite = split[i];
+
+                                        }
+
+                                    }
+
+                                    newkey.strings.Add(split[1], toWrite);
+
+                                }
+
+                            }
+                            else if (newtext[0] == "#")
+                            {
+
+                                string num = split[2];
+                                float index = float.Parse(num);
+
+                                if (newkey.floats.ContainsKey(split[1]))
+                                {
+
+                                    newkey.floats[split[1]] = index;
+
+                                }
+                                else
+                                {
+
+                                    newkey.floats.Add(split[1], index);
+
+                                }
+
+                            }
+                            else if (newtext[0] == "key")
+                            {
+
+
+
+                            }
+
+                        }
+
+                    }
+                    else if (text[0] == "import")
+                    {
+
+
+
+                    }
+
+                }
 
             }
             else
